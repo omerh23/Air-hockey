@@ -17,7 +17,7 @@ public class Hockeyframe extends JFrame implements ActionListener {
     private int levelChoosen;
     private String nickname;
     private UserPlayer player;
-    private frameWindow framePanel;
+    private FrameWindow framePanel;
     private DrawPanel gamePanel;
 
     public Hockeyframe() {
@@ -38,7 +38,7 @@ public class Hockeyframe extends JFrame implements ActionListener {
 
 
         gamePanel = new DrawPanel(); //create first window
-        framePanel = new frameWindow();
+        framePanel = new FrameWindow();
         framePanel.setPreferredSize(new Dimension(300,300));
         //panel.add(label);
         framePanel.setLayout(new GridLayout(5,1,40,40));
