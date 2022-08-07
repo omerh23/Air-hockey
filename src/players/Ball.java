@@ -1,6 +1,6 @@
 package players;
 
-import hockey_game.Hockeyframe;
+import graphics.DrawPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.util.Random;
 
 
 
-import static hockey_game.DrawPictures.PIC_PATH;
+import static graphics.DrawPanel.PIC_PATH;
 
 
 public class Ball extends Thread{
@@ -20,27 +20,27 @@ public class Ball extends Thread{
     private final int IMG_WIDTH;
     private final int IMG_HEIGHT ;
     private final Point ball_points;
-    private Point previousBallPoint;
     private final UserPlayer userPlayer;
     private final ComputerPlayer comp;
     private int y_vector = 1; //the problem is with the vectors
     private int x_vector = 1;
     private int x_speed = 5;
     private int y_speed = 5;
-    private final Hockeyframe frame;
+
     private final ImageIcon icon;
     private int userScore = 0;
     private int computerScore = 0;
-    private final int compSpeed = 6;
+    private  int compSpeed = 6;
+    private DrawPanel dp;
 
 
 
 
 
-    public Ball(UserPlayer userPlayer, ComputerPlayer comp, Hockeyframe frame)  {
+    public Ball(UserPlayer userPlayer, ComputerPlayer comp, DrawPanel dp)  {
         this.userPlayer = userPlayer;
         this.comp = comp;
-        this.frame = frame;
+        this.dp =dp;
         icon = new ImageIcon("goalPic.png");
 
 
@@ -101,7 +101,7 @@ public class Ball extends Thread{
                 rnd = new Random().nextInt(arr.length);
                 x_vector = arr[rnd];
                 //System.out.println(x_vector+" "+ y_vector);
-                this.userPlayer.setScore(userScore,computerScore);
+                dp.setScore(userScore,computerScore);
                 x_speed =5;
                 y_speed =5;
                 //System.out.println("ball: (" +ball_points.getX() +"," + ball_points.getY() +")");
@@ -161,27 +161,12 @@ public class Ball extends Thread{
                 y_speed += 1;
                 x_speed += 1;
 
-                if(Math.abs(userPlayer.getUserPoint().getX() - ball_points.getX()) < 5)
+                if(Math.abs(userPlayer.getUserPoint().getX() - ball_points.getX()) < 1)
                     x_speed = 0;
 
             }
 
 
-            //strike of user from the side
-//            if(Math.abs(userPlayer.getUserPoint().getX() - ball_points.getX()) < 10 &&
-//                    Math.abs(userPlayer.getUserPoint().getY() - ball_points.getY()) < 10)
-//            {
-//                //shoot from left
-//                if(userPlayer.getUserPoint().getX() <= ball_points.getX())
-//                    this.x_vector = 1;
-//                else
-//                    this.x_vector = -1;
-//
-//                x_speed += 1;
-//                y_speed += 1;
-//
-//
-//            }
 
             //strike of computer forward
             if(Math.abs(comp.getCompPoints().getY() - ball_points.getY()) < 20 &&
@@ -195,7 +180,7 @@ public class Ball extends Thread{
                 x_speed += 1;
                 y_speed += 1;
 
-                if( Math.abs(comp.getCompPoints().getX() - ball_points.getX()) < 5)
+                if( Math.abs(comp.getCompPoints().getX() - ball_points.getX()) < 1)
                     x_speed = 0;
 
 
@@ -251,9 +236,9 @@ public class Ball extends Thread{
 
 
             ball_points.setLocation(ball_points.getX() + (x_vector * x_speed), ball_points.getY() + (y_vector * y_speed));
-           // System.out.println("User: (" +players.getUserPoint().getX() +"," + players.getUserPoint().getY() +")");
+           // System.out.println("Comp: (" +comp.getCompPoints().getX() +"," + comp.getCompPoints().getY() +")");
            // System.out.println("ball: (" +ball_points.getX() +"," + ball_points.getY() +")");
-            userPlayer.repaint();
+            dp.repaint();
 
 
 

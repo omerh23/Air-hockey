@@ -1,4 +1,7 @@
-package hockey_game;
+package graphics;
+import players.UserPlayer;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +16,9 @@ public class Hockeyframe extends JFrame implements ActionListener {
     private JButton levelButton;
     private int levelChoosen;
     private String nickname;
+    private UserPlayer player;
+    private frameWindow framePanel;
+    private DrawPanel gamePanel;
 
     public Hockeyframe() {
         super("Air Hockey");
@@ -20,22 +26,27 @@ public class Hockeyframe extends JFrame implements ActionListener {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.levelChoosen = 1;
         nameFeild = new JTextField();
-        nameFeild.setText("username");
+        nameFeild.setText("Nickname");
         startButton = new JButton("Start");
         startButton.setBackground(Color.WHITE);
         this.startButton.addActionListener(this);
         levelButton = new JButton("difficulty level");
         levelButton.setBackground(Color.white);
         this.levelButton.addActionListener(this);
-        JLabel label = new JLabel("Select nickname:");
-        DrawPictures panel = new DrawPictures(); //create first window
-        panel.setPreferredSize(new Dimension(300,300));
-        panel.add(label);
-        panel.setLayout(new GridLayout(4,1,30,30));
-        panel.add(nameFeild);
-        panel.add(levelButton);
-        panel.add(startButton);
-        this.add(panel);
+        JLabel label = new JLabel("");
+
+
+
+        gamePanel = new DrawPanel(); //create first window
+        framePanel = new frameWindow();
+        framePanel.setPreferredSize(new Dimension(300,300));
+        //panel.add(label);
+        framePanel.setLayout(new GridLayout(5,1,40,40));
+
+        framePanel.add(nameFeild);
+        framePanel.add(levelButton);
+        framePanel.add(startButton);
+        this.add(framePanel);
 
 
 
@@ -99,7 +110,8 @@ public class Hockeyframe extends JFrame implements ActionListener {
 
             try {
                 nickname = nameFeild.getText();
-                new Field(this);
+                gamePanel.setNickName(nickname);
+                new Field(this,gamePanel);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

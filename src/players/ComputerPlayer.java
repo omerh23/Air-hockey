@@ -6,10 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static hockey_game.DrawPictures.PIC_PATH;
+import static graphics.DrawPanel.PIC_PATH;
 
 
-public class ComputerPlayer extends Thread{
+public class ComputerPlayer {
 
     private BufferedImage comp_image;
     private final int IMG_WIDTH;
@@ -53,11 +53,4 @@ public class ComputerPlayer extends Thread{
 
 
 
-
-    @Override
-    public void run()
-    {
-
-
-    }
 }

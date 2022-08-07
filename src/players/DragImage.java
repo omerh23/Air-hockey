@@ -1,5 +1,7 @@
 package players;
 
+import graphics.DrawPanel;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -8,12 +10,14 @@ public class DragImage extends MouseMotionAdapter {
     private UserPlayer userp;
     private Ball ball;
     private ComputerPlayer comp;
+    private DrawPanel dp;
     private boolean start = true;
 
-    public DragImage(UserPlayer up, Ball ball, ComputerPlayer comp){
+    public DragImage(UserPlayer up, Ball ball, ComputerPlayer comp , DrawPanel dp){
         this.userp = up;
         this.ball = ball;
         this.comp = comp;
+        this.dp =dp;
 
     }
 
@@ -44,6 +48,6 @@ public class DragImage extends MouseMotionAdapter {
 
 
        // System.out.println("x:"+(int)userp.getUserPoint().getX() + " y:"+(int)userp.getUserPoint().getY());
-        userp.repaint();
+        dp.repaint();
     }
 }
