@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Field extends JDialog  {
 
-    public Field(Hockeyframe frame, DrawPanel dp) throws IOException {
+    public Field(Hockeyframe frame) throws IOException {
        super(frame,"game",true);
 
         Toolkit toolkit = getToolkit();
@@ -14,10 +14,12 @@ public class Field extends JDialog  {
         this.setLocation(size.width / 4    , size.height / 12);
 
 
-        this.add(dp);
+        //this.add(dp);
 
         this.setSize(600,600);
-        this.setVisible(true);
+        this.setVisible(false);
+
+
 
 
 

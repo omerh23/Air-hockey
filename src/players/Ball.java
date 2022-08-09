@@ -30,8 +30,9 @@ public class Ball extends Thread{
     private final ImageIcon icon;
     private int userScore = 0;
     private int computerScore = 0;
-    private  int compSpeed = 6;
+    private  int compSpeed = 2;
     private DrawPanel dp;
+    private boolean game = true;
 
 
 
@@ -76,36 +77,51 @@ public class Ball extends Thread{
     @Override
     public void run() {  //ball start moving
 
-        while (true) {
+        while (game) {
 
             //goal
-            if(ball_points.getX() > 190 && ball_points.getX() < 345 && ( ball_points.getY() > 468 || ball_points.getY() < 71 ))
-            {
+            if(ball_points.getX() > 190 && ball_points.getX() < 345 && ( ball_points.getY() > 468 || ball_points.getY() < 71 )) {
                 //computer goal
-                if(ball_points.getY() > 468)
-                    computerScore ++;
+                if (ball_points.getY() > 468)
+                    computerScore++;
 
-                //User goal
-                else if(ball_points.getY() < 71)
+                    //User goal
+                else if (ball_points.getY() < 71)
                     userScore++;
 
-                JOptionPane.showMessageDialog(null, "","Goal", JOptionPane.INFORMATION_MESSAGE, icon);
+                if (userScore == 3) {
+                    JOptionPane.showMessageDialog(null, "Good job !! You win !!", "win", JOptionPane.INFORMATION_MESSAGE);
+                    game = false;
+                    dp.finish();
 
-                try {Thread.sleep(1000);}
-                 catch (InterruptedException e) {e.printStackTrace();}
+                } else if (computerScore == 3) {
+                    JOptionPane.showMessageDialog(null, "Not bad Comp win", "win", JOptionPane.INFORMATION_MESSAGE);
+                    game = false;
+                    dp.finish();
+                }
+                else {
 
-                ball_points.setLocation(270,270);
-                int[] arr = new int[]{0,-1,1};
-                int rnd = new Random().nextInt(arr.length);
-                y_vector = arr[rnd];
-                rnd = new Random().nextInt(arr.length);
-                x_vector = arr[rnd];
-                //System.out.println(x_vector+" "+ y_vector);
-                dp.setScore(userScore,computerScore);
-                x_speed =5;
-                y_speed =5;
-                //System.out.println("ball: (" +ball_points.getX() +"," + ball_points.getY() +")");
-                //System.out.println("User: (" +userPlayer.getUserPoint().getX() +"," + userPlayer.getUserPoint().getY() +")\n");
+                    JOptionPane.showMessageDialog(null, "", "Goal", JOptionPane.INFORMATION_MESSAGE, icon);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    ball_points.setLocation(270, 270);
+                    int[] arr = new int[]{0, -1, 1};
+                    int rnd = new Random().nextInt(arr.length);
+                    y_vector = arr[rnd];
+                    rnd = new Random().nextInt(arr.length);
+                    x_vector = arr[rnd];
+                    //System.out.println(x_vector+" "+ y_vector);
+                    dp.setScore(userScore, computerScore);
+                    x_speed = 5;
+                    y_speed = 5;
+                    //System.out.println("ball: (" +ball_points.getX() +"," + ball_points.getY() +")");
+                    //System.out.println("User: (" +userPlayer.getUserPoint().getX() +"," + userPlayer.getUserPoint().getY() +")\n");
+                }
             }
 
 
@@ -161,7 +177,7 @@ public class Ball extends Thread{
                 y_speed += 1;
                 x_speed += 1;
 
-                if(Math.abs(userPlayer.getUserPoint().getX() - ball_points.getX()) < 1)
+                if(Math.abs(userPlayer.getUserPoint().getX() - ball_points.getX()) < 2)
                     x_speed = 0;
 
             }
@@ -180,7 +196,7 @@ public class Ball extends Thread{
                 x_speed += 1;
                 y_speed += 1;
 
-                if( Math.abs(comp.getCompPoints().getX() - ball_points.getX()) < 1)
+                if( Math.abs(comp.getCompPoints().getX() - ball_points.getX()) < 2)
                     x_speed = 0;
 
 
@@ -247,6 +263,16 @@ public class Ball extends Thread{
 
         } //while true
 
+        }
+
+        public void setDifficult(int speed)
+        {
+            this.compSpeed = speed;
+        }
+
+        public void stopGame()
+        {
+            this.game = false;
         }
 
 

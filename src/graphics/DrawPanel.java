@@ -7,6 +7,8 @@ import players.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +17,7 @@ import java.io.IOException;
  * this class is for the first window that provide the background picture
  */
 
-public class DrawPanel extends JPanel {
+public class DrawPanel extends JPanel implements ActionListener{
     private BufferedImage img = null;
     public static final String PIC_PATH = "C:\\Users\\omerh\\IdeaProjects\\AirHockey";
     private String pic = "\\hockeypic.jpg";
@@ -27,17 +29,32 @@ public class DrawPanel extends JPanel {
     private JLabel scoreLabel;
     private int userScore = 0;
     private int computerScore = 0;
+    private JButton close_button;
+    private Field field;
 
-    public DrawPanel()
+    public DrawPanel(Field field ,String nickName , int diff)
     {
         player = new UserPlayer();
         comp = new ComputerPlayer();  //maybe to create them in DrawPIctures
         ball = new Ball(player,comp,this);
+        ball.setDifficult(diff);
+        this.nickName = nickName;
+        this.scoreLabel = new JLabel(this.nickName+": " + userScore + "  computer: " + computerScore );
+        this.add(scoreLabel);
+        close_button = new JButton("Leave game");
+        close_button.setForeground(Color.white);
+        close_button.setBackground(Color.blue);
+        close_button.setPreferredSize(new Dimension(120, 20));
+        close_button.addActionListener(this);
+        this.field = field;
 
         ClickUserImage clickListener = new ClickUserImage(player);
         this.addMouseListener(clickListener);
         DragImage drag = new DragImage(player, ball,comp,this);
         this.addMouseMotionListener(drag);
+        this.add(close_button);
+        field.add(this);
+        field.setVisible(true);
     }
 
 
@@ -68,7 +85,8 @@ public class DrawPanel extends JPanel {
 
     }
 
-    public void setNickName(String nm){
+    public void setNickNameANDdiff(String nm ,int sp ){
+        ball.setDifficult(sp);
         nickName = nm;
         this.scoreLabel = new JLabel(nm+": " + userScore + "  computer: " + computerScore );
         this.add(scoreLabel);
@@ -80,6 +98,19 @@ public class DrawPanel extends JPanel {
         this.setVisible(true);
     }
 
+    public void finish(){
+        field.dispose();
+    }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.close_button)
+        {
+            ball.stopGame();
+            field.dispose();
+
+        }
+
+    }
 }

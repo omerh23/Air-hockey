@@ -16,7 +16,6 @@ public class Hockeyframe extends JFrame implements ActionListener {
     private JButton levelButton;
     private int levelChoosen;
     private String nickname;
-    private UserPlayer player;
     private FrameWindow framePanel;
     private DrawPanel gamePanel;
 
@@ -26,7 +25,7 @@ public class Hockeyframe extends JFrame implements ActionListener {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.levelChoosen = 1;
         nameFeild = new JTextField();
-        nameFeild.setText("Nickname");
+        nameFeild.setText("Choose Nickname");
         startButton = new JButton("Start");
         startButton.setBackground(Color.WHITE);
         this.startButton.addActionListener(this);
@@ -37,7 +36,7 @@ public class Hockeyframe extends JFrame implements ActionListener {
 
 
 
-        gamePanel = new DrawPanel(); //create first window
+        //gamePanel = new DrawPanel(); //create first window
         framePanel = new FrameWindow();
         framePanel.setPreferredSize(new Dimension(300,300));
         //panel.add(label);
@@ -69,28 +68,19 @@ public class Hockeyframe extends JFrame implements ActionListener {
             JButton easyButton = new JButton("Easy");
             JButton normalButton = new JButton("Normal");
             JButton hardButton = new JButton("Hard");
-            easyButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e1) {
-                    levelChoosen = 1;
-                    levelDialog.dispose();
-                }
+            easyButton.addActionListener(e1 -> {
+                levelChoosen = 2;
+                levelDialog.dispose();
             });
 
-            normalButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e1) {
-                    levelChoosen = 2;
-                    levelDialog.dispose();
-                }
+            normalButton.addActionListener(e1 -> {
+                levelChoosen = 4;
+                levelDialog.dispose();
             });
 
-            hardButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e1) {
-                    levelChoosen = 3;
-                    levelDialog.dispose();
-                }
+            hardButton.addActionListener(e1 -> {
+                levelChoosen = 6;
+                levelDialog.dispose();
             });
 
             JPanel levelButtonPanel = new JPanel();
@@ -110,11 +100,13 @@ public class Hockeyframe extends JFrame implements ActionListener {
 
             try {
                 nickname = nameFeild.getText();
-                gamePanel.setNickName(nickname);
-                new Field(this,gamePanel);
+                //gamePanel.setNickNameANDdiff(nickname,levelChoosen);
+                new DrawPanel(new Field(this),nickname,levelChoosen);
+                //new Field(this,gamePanel);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
 
         }
 
