@@ -19,7 +19,9 @@ import java.io.IOException;
 
 public class DrawPanel extends JPanel implements ActionListener{
     private BufferedImage img = null;
-    public static final String PIC_PATH = "C:\\Users\\omerh\\IdeaProjects\\AirHockey";
+    //public static final String PIC_PATH = "C:\\Users\\omerh\\IdeaProjects\\Air-hockey";
+    public static final String PIC_PATH = System.getProperty("user.dir");
+
     private String pic = "\\hockeypic.jpg";
     private boolean start_game = false;
     private Ball ball;
